@@ -81,6 +81,26 @@ const displayMovements = function(movements) {
 
 displayMovements(account1.movements)
 
+const calcDisplayBalance = function (movement) {
+const balance = movement.reduce((acc, mov) =>
+  acc + mov, 0)
+labelBalance.textContent = `${balance} $ `;
+
+const income = movement.filter(mov => mov > 0).reduce((acc, mov) => acc + mov)
+  console.log(income);
+  labelSumIn.textContent = `${income} $`
+
+const out = movement.filter(mov => mov < 0).reduce((acc, mov) => acc + mov)
+console.log(Math.abs(out));
+labelSumOut.textContent =  `${Math.abs(out)} $`
+
+const interest = movement.filter(mov => mov > 0).map(mov => mov * 1.2/100).filter(mov => mov >= 1).reduce((acc, mov) => acc + mov)
+console.log(interest);
+labelSumInterest.textContent = `${interest} $`
+};
+
+calcDisplayBalance(account1.movements)
+
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
     acc.userName = acc.owner.toLowerCase().split(' ').map(name => name[0]).join('')
@@ -89,11 +109,7 @@ const createUsernames = function (accs) {
 
 createUsernames(accounts); 
 
-const withdrawal = movement.filter(function (mov) {
-  return mov < 0
-})
 
-console.log(withdrawal);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -112,10 +128,3 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 
 
-const user = 'Emmanuel Owusu'
-const userName = user.toLowerCase().split(' ').map(name => name[0]).join('')
-
-console.log(userName);
-
-
-console.log(accounts);
